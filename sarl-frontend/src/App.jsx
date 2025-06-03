@@ -13,14 +13,14 @@ function App() {
             <div className="d-flex flex-column min-vh-100">
                 <Header />
                 <main className="flex-grow-1">
-                    <Routes>
+            <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login />} />
                     </Routes>
                 </main>
                 <Footer />
-            </div>
+                        </div>
         </Router>
     );
 }
