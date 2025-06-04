@@ -11,15 +11,15 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(validationForm) {
+        if(validationForm()) {
             const loginData = { 
                 username: username,
                 password: password
             };
-            console.log(loginData);
             try {
                 await login(loginData);
-                navigate('/dashboard');
+                // Forcer un rechargement de la page pour mettre à jour le header
+                window.location.href = '/dashboard';
             } catch (err) {
                 setError('Invalid username or password');
             }
@@ -27,30 +27,15 @@ const Login = () => {
     };
 
     const validationForm = () => {
-        let valid = true;
-        const errorsCopy = { ...errors };
-
-        // Username validation
         if (!username.trim()) {
-            errorsCopy.username = 'Exige un nom utilisateur';
-            valid = false;
-        } else {
-            errorsCopy.username = '';
+            setError('Username is required');
+            return false;
         }
-
-        // Password validation
         if (!password) {
-            errorsCopy.password = 'Exige un mot de passe';
-            valid = false;
-        } else if (password.length < 6) {
-            errorsCopy.password = 'Le mot e passe doit être constituer au moins 6 caractères';
-            valid = false;
-        } else {
-            errorsCopy.password = '';
+            setError('Password is required');
+            return false;
         }
-
-        setErrors(errorsCopy);
-        return valid;
+        return true;
     };
 
     return (
@@ -93,7 +78,7 @@ const Login = () => {
                                         </button>
                                     </div>
                                 </div>
-                                <button type="submit" className="btn btn-primary w-100" onClick={handleSubmit}>Login</button>
+                                <button type="submit" className="btn btn-primary w-100">Login</button>
                             </form>
                             <div className="text-center mt-3">
                                 <p>Don't have an account? <a href="/register">Register here</a></p>
